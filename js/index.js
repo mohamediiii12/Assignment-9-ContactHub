@@ -367,6 +367,9 @@ function UpdateContact() {
    NoContacts(contactsList);
    Nofav(contactsList);
    Noemer(contactsList);
+    bootstrap.Modal.getInstance(
+      document.getElementById("addContactModal")
+   ).hide();
    
    };
 };
