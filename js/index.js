@@ -34,32 +34,34 @@ function addclick() {
    saveContactBtn.classList.remove("d-none");
 }
 function addContact() {
-if (validationInputs(persName) && validationInputs(persNumber)) {
-   // inputacception();
-   var contact = {
-      name: persName.value,
-      number: persNumber.value,
-      email: persEmail.value,
-      address: persAddress.value,
-      group: persGroup.value,
-      image: persImage.value,
-      emergency: emergency.checked,
-      favorite: favorite.checked
-   };
-   
-   contactsList.push(contact);
-   localStorage.setItem("contactsList", JSON.stringify(contactsList));
-   DisplayContacts(contactsList);
-   displayFavorite(contactsList);
-   displayEmergency(contactsList);
-   Nofav(contactsList);
-   Noemer(contactsList);
-   
-   
-   resetForm();
+   if (validationInputs(persName) && validationInputs(persNumber)) {
+      // inputacception();
+      var contact = {
+         name: persName.value,
+         number: persNumber.value,
+         email: persEmail.value,
+         address: persAddress.value,
+         group: persGroup.value,
+         image: persImage.files.length > 0
+            ? `images/${persImage.files[0].name}`
+            : "",
+         emergency: emergency.checked,
+         favorite: favorite.checked
+      };
+
+      contactsList.push(contact);
+      localStorage.setItem("contactsList", JSON.stringify(contactsList));
+      DisplayContacts(contactsList);
+      displayFavorite(contactsList);
+      displayEmergency(contactsList);
+      Nofav(contactsList);
+      Noemer(contactsList);
+
+
+      resetForm();
    }
-   }
-   
+}
+
 function resetForm() {
    persName.value = "";
    persNumber.value = "";
@@ -81,11 +83,14 @@ function DisplayContacts(list) {
                            <div class="card h-100">
                               <div class="card-body">
                                  <div class="d-flex flex-row column-gap-3 align-items-center mb-3">
-                                    <div class="person-img w-h-56 position-relative">
+                                 <div class="position-relative w-h-56">
+                                 ${list[i].image ? `<img src="${list[i].image}" class="img-fluid object-fit-cover rounded-3">` : `<div class="person-img  w-100 h-100">
                                        <span id="person-img-text"
-                                          class="text-white fw-bolder text-lg d-flex justify-content-center align-items-center">AF</span>
-                                          ${list[i].favorite ? `<span class="fav-icon w-h-20 bg-amber-400 d-flex justify-content-center align-items-center text-white rounded-circle text-xxxs"><i class="fas fa-star"></i></span>` : ``}
-                                          ${list[i].emergency ? `<span class="emer-icon w-h-20 bg-rose-500 d-flex justify-content-center align-items-center text-white rounded-circle text-xxxs"><i class="fas fa-heart-pulse"></i></span>` : ``}
+                                          class="text-white fw-bolder text-lg d-flex justify-content-center align-items-center">AF</span>     
+                                    </div>`}
+                                    
+                                    ${list[i].favorite ? `<span class="fav-icon w-h-20 bg-amber-400 d-flex justify-content-center align-items-center text-white rounded-circle text-xxxs"><i class="fas fa-star"></i></span>` : ``}
+                                    ${list[i].emergency ? `<span class="emer-icon w-h-20 bg-rose-500 d-flex justify-content-center align-items-center text-white rounded-circle text-xxxs"><i class="fas fa-heart-pulse"></i></span>` : ``}
                                     </div>
                                     <div>
                                        <h3 id="persName" class="fw-bold text-gray-900 h6">${list[i].name}</h3>
@@ -343,34 +348,35 @@ function editContact(num) {
    persEmail.value = contactsList[index].email;
    persAddress.value = contactsList[index].address;
    persGroup.value = contactsList[index].group;
-   persImage.value = contactsList[index].image;
+
    favorite.checked = contactsList[index].favorite;
    emergency.checked = contactsList[index].emergency;
    formLabel.innerHTML = "Update Contact";
    UpdateContactBtn.classList.remove("d-none");
    saveContactBtn.classList.add("d-none");
 };
-function UpdateContact() {   
+function UpdateContact() {
    if (validationInputs(persName) && validationInputs(persNumber)) {
-   contactsList[editIndex].name = persName.value;
-   contactsList[editIndex].number = persNumber.value;
-   contactsList[editIndex].email = persEmail.value;
-   contactsList[editIndex].address = persAddress.value;
-   contactsList[editIndex].group = persGroup.value;
-   contactsList[editIndex].image = persImage.value;
-   contactsList[editIndex].favorite = favorite.checked;
-   contactsList[editIndex].emergency = emergency.checked;
-   localStorage.setItem("contactsList", JSON.stringify(contactsList));
-   DisplayContacts(contactsList);
-   displayFavorite(contactsList);
-   displayEmergency(contactsList);
-   NoContacts(contactsList);
-   Nofav(contactsList);
-   Noemer(contactsList);
-    bootstrap.Modal.getInstance(
-      document.getElementById("addContactModal")
-   ).hide();
-   
+      contactsList[editIndex].name = persName.value;
+      contactsList[editIndex].number = persNumber.value;
+      contactsList[editIndex].email = persEmail.value;
+      contactsList[editIndex].address = persAddress.value;
+      contactsList[editIndex].group = persGroup.value;
+      if (persImage.files.length > 0) {
+         contactsList[editIndex].image = `images/${persImage.files[0].name}`;}
+      contactsList[editIndex].favorite = favorite.checked;
+      contactsList[editIndex].emergency = emergency.checked;
+      localStorage.setItem("contactsList", JSON.stringify(contactsList));
+      DisplayContacts(contactsList);
+      displayFavorite(contactsList);
+      displayEmergency(contactsList);
+      NoContacts(contactsList);
+      Nofav(contactsList);
+      Noemer(contactsList);
+      bootstrap.Modal.getInstance(
+         document.getElementById("addContactModal")
+      ).hide();
+
    };
 };
 function searchContact() {
@@ -388,69 +394,69 @@ function searchContact() {
    Noemer(searchList);
 }
 function inputacception() {
-   if (persName.value == "" && persNumber.value == ""){
-   Swal.fire({
-      title: "Name and Number are required",
-      text: "Please fill in the remaining fields.",
-      icon: "error",
-      padding: "1.5rem",
-      draggable: true,
-   });
-   
-   }else if (persName.value == ""){
-   Swal.fire({
-      title: "Missing Name",
-      text: "Please enter a name for the contact!",
-      icon: "error",
-      padding: "1.5rem",
-      draggable: true,
-   });
-   }else if(persNumber.value == ""){
-   
-   Swal.fire({
-      title: "Missing Phone",
-      text: "Please enter a phone number!",
-      icon: "error",
-      padding: "1.5rem",
-      draggable: true,
-   });
-   
-   }else{
-      
+   if (persName.value == "" && persNumber.value == "") {
+      Swal.fire({
+         title: "Name and Number are required",
+         text: "Please fill in the remaining fields.",
+         icon: "error",
+         padding: "1.5rem",
+         draggable: true,
+      });
+
+   } else if (persName.value == "") {
+      Swal.fire({
+         title: "Missing Name",
+         text: "Please enter a name for the contact!",
+         icon: "error",
+         padding: "1.5rem",
+         draggable: true,
+      });
+   } else if (persNumber.value == "") {
+
+      Swal.fire({
+         title: "Missing Phone",
+         text: "Please enter a phone number!",
+         icon: "error",
+         padding: "1.5rem",
+         draggable: true,
+      });
+
+   } else {
+
       swal.fire({
-      title: "Added",
-      text: "Contact has been Added Successfully",
-      icon: "success",
-      padding: "1.5rem",
-      showConfirmButton: false,
-      timer: 2000,
-   });
-   
+         title: "Added",
+         text: "Contact has been Added Successfully",
+         icon: "success",
+         padding: "1.5rem",
+         showConfirmButton: false,
+         timer: 2000,
+      });
+
    }
 }
-function validationInputs(element){
-   var regex ={
-      name : /^[a-zA-Z\s]+$/i,
-      phone : /^(01)[0-2 5][0-9]{8}$/,
-      email : /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i,
+function validationInputs(element) {
+   var regex = {
+      name: /^[a-zA-Z\s]+$/i,
+      phone: /^(01)[0-2 5][0-9]{8}$/,
+      email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i,
    }
-var isvalid= regex[element.id].test(element.value.toString());
+   var isvalid = regex[element.id].test(element.value.toString());
 
-if(isvalid){
-   element.classList.add("is-valid");
-   element.classList.remove("is-invalid");
-   element.nextElementSibling.classList.replace("d-block", "d-none");
-   saveContactBtn.setAttribute("data-bs-dismiss", "modal");
-   
-}else{
-   element.classList.add("is-invalid");
-   element.classList.remove("is-valid");
-   element.nextElementSibling.classList.replace("d-none", "d-block");
-   saveContactBtn.removeAttribute("data-bs-dismiss");
-   
-};
+   if (isvalid) {
+      element.classList.add("is-valid");
+      element.classList.remove("is-invalid");
+      element.nextElementSibling.classList.replace("d-block", "d-none");
+      saveContactBtn.setAttribute("data-bs-dismiss", "modal");
+
+   } else {
+      element.classList.add("is-invalid");
+      element.classList.remove("is-valid");
+      element.nextElementSibling.classList.replace("d-none", "d-block");
+      saveContactBtn.removeAttribute("data-bs-dismiss");
+
+   };
 
 
-return isvalid;
+   return isvalid;
 };
 

@@ -439,14 +439,14 @@ header .emergency {
    background: linear-gradient(135deg,var(--color-rose-500),var(--color-pink-600));
    border-radius: .75rem;
 }
-.person-img .fav-icon{
+ .fav-icon{
 position: absolute;
 top: 0;
 right: 0;
 box-shadow: 0 0 0 2px white;
 transform: translate(2.5px,-2.5px);
 }
-.person-img .emer-icon{
+ .emer-icon{
 position: absolute;
 bottom: 0;
 right: 0;
