@@ -34,7 +34,7 @@ function addclick() {
    saveContactBtn.classList.remove("d-none");
 }
 function addContact() {
-if (validationInputs(persName) && validationInputs(persNumber) && validationInputs(persEmail)) {
+if (validationInputs(persName) && validationInputs(persNumber)) {
    // inputacception();
    var contact = {
       name: persName.value,
@@ -60,8 +60,6 @@ if (validationInputs(persName) && validationInputs(persNumber) && validationInpu
    }
    }
    
-
-
 function resetForm() {
    persName.value = "";
    persNumber.value = "";
@@ -175,7 +173,6 @@ function DisplayContacts(list) {
    contactsCards.innerHTML = cards;
 
 };
-
 function changePadgeGroup(value) {
    var padgeGroup = "";
    if (value == "family") {
@@ -353,9 +350,8 @@ function editContact(num) {
    UpdateContactBtn.classList.remove("d-none");
    saveContactBtn.classList.add("d-none");
 };
-function UpdateContact() {
-   
-   if (validationInputs(persName) && validationInputs(persNumber) && validationInputs(persEmail)) {
+function UpdateContact() {   
+   if (validationInputs(persName) && validationInputs(persNumber)) {
    contactsList[editIndex].name = persName.value;
    contactsList[editIndex].number = persNumber.value;
    contactsList[editIndex].email = persEmail.value;
@@ -371,7 +367,7 @@ function UpdateContact() {
    NoContacts(contactsList);
    Nofav(contactsList);
    Noemer(contactsList);
-   resetForm();
+   
    };
 };
 function searchContact() {
