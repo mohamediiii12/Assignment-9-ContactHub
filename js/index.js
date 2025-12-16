@@ -34,6 +34,9 @@ function addclick() {
    saveContactBtn.classList.remove("d-none");
 }
 function addContact() {
+   if(inputacception()){
+      return;
+   }
    if (validationInputs(persName) && validationInputs(persNumber)) {
       // inputacception();
       var contact = {
