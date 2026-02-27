@@ -207,10 +207,10 @@ function displayFavorite(list) {
          cards += `<div class="col-md-6 col-xxl-12">
                                     <a class="call-fav d-flex flex-row justify-content-between align-items-center p-2">
                                        <div class="d-flex flex-row column-gap-1 align-items-center">
-                                          <div class="person-img w-h-40 rounded-3">
+                                         ${list[i].image ? `<img src="${list[i].image}" class="img-fluid object-fit-cover rounded-3 w-h-40">` : `<div class="person-img w-h-40 rounded-3">
                                              <span id="person-img-text"
                                                 class="text-white fw-bolder text-sm d-flex justify-content-center align-items-center">M</span>
-                                          </div>
+                                          </div>`}
                                           <div>
                                              <h4 id="persName" class="fw-bold text-gray-900 text-xxs m-0">${list[i].name}
                                              </h4>
@@ -237,10 +237,10 @@ function displayEmergency(list) {
          cards += ` <div class="col-md-6 col-xxl-12">
                                     <a class="call-Emer d-flex flex-row justify-content-between align-items-center p-2">
                                        <div class="d-flex flex-row column-gap-1 align-items-center">
-                                          <div class="person-img w-h-40 rounded-3">
+                                          ${list[i].image ? `<img src="${list[i].image}" class="img-fluid object-fit-cover rounded-3 w-h-40">` : `<div class="person-img w-h-40 rounded-3">
                                              <span id="person-img-text"
                                                 class="text-white fw-bolder text-sm d-flex justify-content-center align-items-center">M</span>
-                                          </div>
+                                          </div>`}
                                           <div>
                                              <h4 id="persName" class="fw-bold text-gray-900 text-xxs m-0">${list[i].name}
                                              </h4>
